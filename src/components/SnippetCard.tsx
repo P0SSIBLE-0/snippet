@@ -6,6 +6,10 @@ import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 interface SnippetCardProps {
   snippet: Snippet;
 }
+export const metadata = {
+    title: "Snippets",
+    description: "Snippets for developers",
+  };
 
 
 export default function SnippetCard({ snippet }: SnippetCardProps) {

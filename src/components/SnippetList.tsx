@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchSnippets } from '@/store/snippetSlice'
 import SnippetCard from './SnippetCard'
@@ -17,11 +17,11 @@ const SnippetList: React.FC<SnippetListProps> =  (props) => {
   const dispatch = useDispatch<AppDispatch>()
   const snippets = useSelector((state: RootState) => state.snippets.snippets)
   const status = useSelector((state: RootState) => state.snippets.status)
-  const [page, setPage] = useState(1)
-
+  // const [page,] = useState(1)
+ const page = 1;
   useEffect(() => {
     if (status === 'idle') {
-      dispatch(fetchSnippets() as any)
+      dispatch(fetchSnippets())
     }
     console.log(status)
   }, [status, dispatch])
@@ -38,13 +38,14 @@ const SnippetList: React.FC<SnippetListProps> =  (props) => {
     No snippets yet!</div>
   }
 
-
+  if (status === 'loading') {
+    return <Loader />
+  }
 
   return (
     <div className='min-h-screen'>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {paginatedSnippets.map((snippet) => (
-          status === 'loading' ? <Loader /> :
            <SnippetCard key={snippet._id} snippet={snippet} />
         ))}
       </div>

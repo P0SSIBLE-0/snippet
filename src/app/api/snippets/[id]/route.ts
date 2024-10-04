@@ -11,7 +11,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
       return NextResponse.json({ error: 'Snippet not found' }, { status: 404 })
     }
     return NextResponse.json(snippet)
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Error fetching snippet' }, { status: 500 })
   }
 }
@@ -36,7 +36,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
     }
 
     return NextResponse.json(snippet)
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Error updating snippet' }, { status: 500 })
   }
 }
@@ -56,7 +56,7 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
     }
 
     return NextResponse.json({ message: 'Snippet deleted successfully' })
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Error deleting snippet' }, { status: 500 })
   }
 }

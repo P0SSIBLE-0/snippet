@@ -19,8 +19,7 @@ export async function GET() {
     }
     
     return NextResponse.json(snippets);
-  } catch (error) {
-    console.error('Error fetching snippets:', error);
+  } catch {
     return NextResponse.json({ error: 'Error fetching snippets' }, { status: 500 })
   }
 }
@@ -37,7 +36,7 @@ export async function POST(request: Request) {
     const newSnippet = new Snippet({ ...data, userId })
     await newSnippet.save()
     return NextResponse.json(newSnippet, { status: 201 })
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Error creating snippet' }, { status: 500 })
   }
 }

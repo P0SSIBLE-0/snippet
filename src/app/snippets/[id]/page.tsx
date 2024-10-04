@@ -40,7 +40,7 @@ export default function ViewSnippet() {
         await dispatch(deleteSnippet(id.toString())).unwrap();
         toast.success("Snippet deleted successfully");
         router.push("/");
-      } catch (err) {
+      } catch {
         toast.error("Failed to delete snippet");
         setError("Failed to delete snippet");
       }

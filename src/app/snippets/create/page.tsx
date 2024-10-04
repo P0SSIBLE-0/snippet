@@ -24,7 +24,7 @@ export default function CreateSnippet() {
       await dispatch(createSnippet(newSnippet));
       toast.success("Snippet created successfully");
       router.push("/");
-    } catch (err) {
+    } catch {
       toast.error("Failed to create snippet, try again!");
     }
   };

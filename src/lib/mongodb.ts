@@ -11,10 +11,16 @@ interface Cached {
   promise: Promise<typeof mongoose> | null;
 }
 
-let cached: Cached = (global as any).mongoose;
+interface CustomGlobal {
+    mongoose?: Cached;
+}
+
+declare const global: CustomGlobal;
+
+let cached: Cached = (global as CustomGlobal).mongoose || { conn: null, promise: null }; 
 
 if (!cached) {
-  cached = (global as any).mongoose = { conn: null, promise: null };
+  cached = (global).mongoose = { conn: null, promise: null };
 }
 
 export async function connectToDatabase(): Promise<typeof mongoose> {
