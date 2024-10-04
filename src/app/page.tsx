@@ -22,9 +22,9 @@ export default function Home() {
       {/* when user is not login */}
 
       <SignedOut>
-        <div className="dark:bg-zinc-900 text-gray-100 min-h-[] flex items-center justify-center p-4 ">
-          <div className="max-w-4xl w-full mx-auto text-center relative">
-            <div className="absolute top-10 left-1/4 z-0  opacity-50">
+        <div className="dark:bg-zinc-900 text-gray-100 min-h-[90%] flex items-center justify-center p-4 ">
+          <div className="max-w-4xl w-full mx-auto text-center relative mt-12">
+            <div className="absolute top-[9rem] md:top-10 lg:top-10 left-1/4 z-0  opacity-50">
               <div className="blobs">
                 <div className="blob a">a</div>
                 <div className="blob b">b</div>
@@ -34,7 +34,7 @@ export default function Home() {
 
             {/* Header Section */}
             <div className="mb-12 lg:w-4/5 mx-auto space-y-4">
-              <h1 className="lg:text-6xl text-[2.7rem] font-bold mb-4 text-black dark:text-gray-100">
+              <h1 className="lg:text-6xl text-[2.7rem] font-extrabold mb-4 text-black dark:text-gray-100">
                 Code{" "}
                 <span className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
                   Snippets

@@ -67,7 +67,7 @@ body{
 
 .blob.a {
   background-color: rgba(255, 77, 0, 0.8); /* mix(#FF4D00, white, 80%) */
-  animation: circular2 40s linear infinite;
+  animation: circular2 30s linear infinite;
 }
 
 .blob.b {
@@ -76,7 +76,7 @@ body{
 }
 
 .blob.c {
-  animation: circular 60s linear infinite;
+  animation: circular 50s linear infinite;
 }
 
 @keyframes circular {
