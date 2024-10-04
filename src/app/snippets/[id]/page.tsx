@@ -98,7 +98,7 @@ export default function ViewSnippet() {
           {snippet.isPublic && <ShareButton snippetId={snippet._id} />}
           <Link
             href={`/snippets/edit/${snippet._id}`}
-            className="border border-gray-300 p-2 text-gray-900 dark:text-gray-100 hover:opacity-85 rounded-md inline-flex items-center"
+            className="border border-gray-300 dark:border-zinc-700 p-2 text-gray-900 dark:text-gray-100 hover:opacity-85 rounded-md inline-flex items-center"
           >
             <Edit className="size-4 mr-2" />
             Edit
