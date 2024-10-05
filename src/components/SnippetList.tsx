@@ -32,15 +32,15 @@ const SnippetList: React.FC<SnippetListProps> =  (props) => {
   // const totalPages = Math.ceil(filteredSnippets.length / ITEMS_PER_PAGE)
   const paginatedSnippets = filteredSnippets.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE)
 
-
-  if(!snippets.length){
-    return <div className='text-2xl text-semibold dark:text-gray-100 '>
-    No snippets yet!</div>
-  }
-
   if (status === 'loading') {
     return <Loader />
   }
+
+  if(!snippets.length){
+    return <div className='text-2xl text-semibold text-gray-950 dark:text-gray-100 text-center font-bold'>
+    No snippets yet!</div>
+  }
+
 
   return (
     <div className='min-h-screen'>

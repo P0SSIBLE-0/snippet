@@ -101,7 +101,7 @@ response = requests.get(url)`}
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="py-2 px-4 mt-4 bg-gray-100 dark:bg-zinc-800 text-gray-900 dark:text-gray-100 outline-none border border-gray-300 dark:border-zinc-500 rounded-full min-w-80 focus:bg-gray-200 dark:focus:bg-zinc-700 w-full"
+              className="py-2 px-4 mt-4 bg-gray-200 dark:bg-zinc-800 text-gray-900 dark:text-gray-100 outline-none border border-gray-300 dark:border-zinc-500 rounded-full min-w-80 focus:bg-gray-200 dark:focus:bg-zinc-700 w-full"
               type="text"
               name="search"
               placeholder="Search..."
