@@ -40,7 +40,7 @@ export default function CreateSnippet() {
             placeholder="Snippet Title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full flex-1 mb-4 p-2 border rounded dark:bg-zinc-800 dark:text-zinc-100 dark:border-zinc-500"
+            className="w-full flex-1 mb-4 p-2 border rounded outline-zinc-500 dark:bg-zinc-800 dark:text-zinc-100 dark:border-zinc-500"
             required
           />
           <LanguageSelector value={language} setLanguage={setLanguage} />

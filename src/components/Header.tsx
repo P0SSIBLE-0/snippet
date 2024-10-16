@@ -65,8 +65,12 @@ export default function Header() {
                   Create Snippet
                 </span>
               </Link>
-              <li>
-                <UserButton />
+              <li className="pt-1">
+                <UserButton appearance={{
+              elements: {
+                userButtonAvatarBox: 'size-9' 
+              },
+            }}/>
               </li>
             </SignedIn>
             <SignedOut>

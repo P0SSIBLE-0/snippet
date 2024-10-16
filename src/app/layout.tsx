@@ -23,7 +23,7 @@ export default function RootLayout({
       <body className={montserrat.className + 'w-full min-h-screen bg-gray-100 dark:bg-zinc-900'}>
         <ClerkProvider>
           <Provider store={store}>
-            <div className="flex dark:bg-zinc-900 dark:text-gray-200 max-w-6xl mx-auto flex-col min-h-screen">
+            <div className="flex dark:bg-zinc-900 dark:text-gray-200 max-w-6xl mx-auto flex-col">
               <Toaster />
               <Header />
               {children}

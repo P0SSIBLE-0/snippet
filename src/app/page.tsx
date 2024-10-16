@@ -52,7 +52,7 @@ export default function Home() {
               <div className="flex justify-center items-center mt-5">
                 <Link
                   href={"/auth/signup"}
-                  className="text-white text-center rounded-full h-12 hover:animate-pulse hover:shadow-lg hover:scale-105 transition duration-200 bg-gradient-to-br from-pink-400 via-purple-400 to-indigo-400 px-6 pt-3 font-semibold"
+                  className="text-white text-center rounded-full h-12 hover:shadow-lg hover:scale-105 transition duration-200 bg-gradient-to-br from-pink-400 via-purple-400 to-indigo-400 px-6 pt-3 font-semibold"
                 >
                   Get Started
                 </Link>
@@ -90,8 +90,8 @@ response = requests.get(url)`}
       <SignedIn>
         <div className="flex flex-col lg:flex-row md:flex-row mb-8 justify-between items-start p-4">
           <div>
-            <h1 className="text-3xl font-bold my-2">
-              Welcome, {user?.username}
+            <h1 className="text-3xl font-bold my-2 ">
+              Welcome, <span className="bg-gradient-to-r from-purple-500 to-pink-400 text-transparent bg-clip-text">{user?.username}</span>
             </h1>
             <p className="mb-4 text-neutral-500">
               Create and manage your code snippets.
