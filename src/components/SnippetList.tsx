@@ -36,9 +36,10 @@ const SnippetList: React.FC<SnippetListProps> = (props) => {
   );
 
   if (status === "loading") {
+    const LoaderNum = 3;
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {[...Array(paginatedSnippets.length)].map((_, index) => (
+        {[...Array(LoaderNum)].map((_, index) => (
           <Loader key={index} />
         ))}
       </div>

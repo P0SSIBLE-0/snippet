@@ -1,6 +1,18 @@
-import { SignedOut, SignIn } from "@clerk/nextjs";
+'use client';
+import { SignedOut, SignIn, useAuth } from "@clerk/nextjs";
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function LoginPage() {
+  const { userId } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (userId) {
+      router.push('/');
+    }
+  }, [userId, router]);
+
   return (
     <div className="flex min-h-screen flex-col md:flex-row p-3">
       {/* Left side - Image */}
@@ -16,8 +28,8 @@ export default function LoginPage() {
       {/* Right side - Login form */}
       <div className="flex w-full items-center justify-center bg-gray-100 dark:bg-zinc-900 lg:p-5 md:p-5 md:w-1/2">
         <div className="w-full max-w-md flex justify-center items-center flex-col"> 
-      <h1 className="text-3xl font-bold dark:text-gray-100 text-zinc-900 mb-4">Welcome Back</h1>
-          <h2 className="mb-6 text-center text-2xl font-semibold dark:text-gray-100 text-zinc-900">Sign in to your account</h2>
+      <h1 className="text-3xl font-bold dark:text-gray-100 text-zinc-900 my-4">Welcome Back</h1>
+          <h2 className="mb-6 text-center text-lg dark:text-gray-100 text-zinc-900">Sign in to your account</h2>
           <SignedOut>
 
           <SignIn 

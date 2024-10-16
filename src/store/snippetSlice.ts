@@ -63,7 +63,7 @@ const snippetSlice = createSlice({
       .addCase(fetchSnippets.fulfilled, (state, action: PayloadAction<Snippet[]>) => {
         state.status = 'succeeded'
         state.snippets = action.payload;
-        console.log(state.snippets);
+        // console.log(state.snippets);
       })
       .addCase(fetchSnippets.rejected, (state:SnippetState) => {
         state.status = 'failed';
