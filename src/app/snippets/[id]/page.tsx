@@ -84,7 +84,7 @@ export default function ViewSnippet() {
 
   return (
     <div className="container mx-auto px-2 lg:px-4 md:px-4 py-8">
-      <div className="lg:max-w-3xl w-full mx-auto border border-gray-300 dark:border-zinc-600 rounded-md px-3 lg:px-5 md:px-5 py-6">
+      <div className="lg:max-w-5xl w-full mx-auto border border-gray-300 dark:border-zinc-600 rounded-md px-3 lg:px-5 md:px-5 py-6">
         <div className="my-2 mb-4">
           <h1 className="text-3xl font-bold">{snippet.title}</h1>
           <p className="mb-2 text-neutral-500 text-sm">

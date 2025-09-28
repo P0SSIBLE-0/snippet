@@ -28,7 +28,7 @@ export default function SnippetCard({ snippet }: SnippetCardProps) {
             style={oneDark}
             showLineNumbers
             wrapLines={true}
-            customStyle={{ maxHeight: '200px', overflowX: 'hidden' }} 
+            customStyle={{ minHeight: '100px', maxHeight: '300px', overflowX: 'hidden'}} 
           >
             {snippet.content.slice(0, 75) + "..."}
           </SyntaxHighlighter>

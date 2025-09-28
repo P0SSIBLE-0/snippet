@@ -35,11 +35,11 @@ export default function Header() {
   if (!mounted) return null; // Prevents hydration error
 
   return (
-    <header className="bg-white/45 dark:bg-zinc-900/45 sticky top-0 z-50  border-b border-zinc-200 dark:border-zinc-700 backdrop-blur-md dark:border-none">
+    <header className="bg-transparent sticky top-0 z-50  dark:border-zinc-700 backdrop-blur-md dark:border-none">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <Link
           href="/"
-          className="text-2xl font-extrabold bg-gradient-to-r dark:from-zinc-100 dark:to-zinc-500 from-zinc-900 to-zinc-500 bg-clip-text text-transparent duration-200"
+          className="text-2xl lg:md:text-3xl font-extrabold bg-gradient-to-r dark:from-zinc-100 dark:to-zinc-500 from-zinc-900 to-zinc-500 bg-clip-text text-transparent duration-200"
         >
           Snippets
         </Link>
@@ -77,13 +77,13 @@ export default function Header() {
               <li className="space-x-4">
                 <Link
                   href="/auth/login"
-                  className="px-4 py-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 text-sm font-semibold"
+                  className="px-4 py-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 text-sm font-semibold lg:text-base md:text-base"
                 >
                   Login
                 </Link>
                 <Link
                   href="/auth/signup"
-                  className="px-4 py-2 rounded-full text-sm font-semibold bg-gray-200 dark:bg-zinc-700"
+                  className="px-4 py-2 rounded-full text-sm font-semibold bg-gray-200 dark:bg-zinc-700 lg:text-base md:text-base"
                 >
                   Signup
                 </Link>

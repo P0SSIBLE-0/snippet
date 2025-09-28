@@ -52,9 +52,8 @@ export default function Home() {
               <div className="flex justify-center items-center mt-5">
                 <Link
                   href={"/auth/signup"}
-                  className="text-white text-center rounded-full h-12 hover:shadow-lg hover:scale-105 transition duration-200 bg-gradient-to-br from-pink-400 via-purple-400 to-indigo-400 px-6 pt-3 font-semibold"
                 >
-                  Get Started
+                  <button className="text-white text-center rounded-full hover:scale-105 transition duration-200 bg-gradient-to-br from-pink-400 via-purple-400 to-indigo-400 px-6 py-2.5 font-semibold lg:text-base md:text-base">Get Started</button>
                 </Link>
               </div>
             </div>
