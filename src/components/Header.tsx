@@ -35,7 +35,7 @@ export default function Header() {
   if (!mounted) return null; // Prevents hydration error
 
   return (
-    <header className="bg-transparent sticky top-0 z-50  dark:border-zinc-700 backdrop-blur-md dark:border-none">
+    <header className="bg-transparent sticky top-0 z-50  dark:border-zinc-700 backdrop-blur dark:border-none">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <Link
           href="/"
@@ -77,13 +77,13 @@ export default function Header() {
               <li className="space-x-4">
                 <Link
                   href="/auth/login"
-                  className="px-4 py-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 text-sm font-semibold lg:text-base md:text-base"
+                  className="px-4 py-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 text-sm font-semibold "
                 >
                   Login
                 </Link>
                 <Link
                   href="/auth/signup"
-                  className="px-4 py-2 rounded-full text-sm font-semibold bg-gray-200 dark:bg-zinc-700 lg:text-base md:text-base"
+                  className="px-4 py-2 rounded-full text-sm font-semibold bg-gray-200 dark:bg-zinc-700"
                 >
                   Signup
                 </Link>
