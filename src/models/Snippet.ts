@@ -5,6 +5,7 @@ const SnippetSchema = new mongoose.Schema({
   content: { type: String, required: true },
   language: { type: String, required: true },
   isPublic: { type: Boolean, default: false },
+  tags: { type: [String], default: [] },
   userId: { type: String, required: true },
 }, { timestamps: true })
 

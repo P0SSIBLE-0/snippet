@@ -12,7 +12,7 @@ import { Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
 
 export default function EditSnippet() {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
   const snippet = useSelector(
@@ -29,7 +29,9 @@ export default function EditSnippet() {
   const [isPublic, setIsPublic] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchSnippetById(id.toString())).then(() => setLoading(false));
+    if (id) {
+      dispatch(fetchSnippetById(id)).then(() => setLoading(false));
+    }
   }, [dispatch, id]);
 
   useEffect(() => {

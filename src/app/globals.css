@@ -1,116 +1,23 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-body{
-  height: 100%;
-  width: 100%;
+@theme {
+  --font-geist-mono: var(--font-geist-mono);
 }
 
+@custom-variant dark (&:where(.dark, .dark *));
 
-.box {
-  background: black;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  position: relative;
-}
-
-.box:after {
-  content: '';
-  width: 100%;
-  height: 100vh;
-  background: url('https://i.imgur.com/PsjPzdO.png');
-  background-size: 200px;
-  mix-blend-mode: overlay;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.blobs {
-  width: 50vh;
-  height: 50vh;
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-@media (min-width: 300px) {
-  .blobs {
-    width: 30vh;
-    height: 30vh;
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-}
-
-
-.blob {
+body,
+html {
   width: 100%;
   height: 100%;
-  border-radius: 100%;
-  position: absolute;
-  background-color: #ed45dd;
-  mix-blend-mode: multiply;
-  filter: blur(100px);
+  font-family: var(--font-inter);
 }
 
-.blob.a {
-  background-color: rgba(255, 77, 0, 0.8); /* mix(#FF4D00, white, 80%) */
-  animation: circular2 30s linear infinite;
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-.blob.b {
-  background-color: rgba(255, 77, 0, 0.5); /* mix(#FF4D00, white, 50%) */
-  animation: circular 20s linear infinite;
-}
-
-.blob.c {
-  animation: circular 50s linear infinite;
-}
-
-@keyframes circular {
-  0% {
-      transform: translate(0, -100px);
-  }
-  25% {
-      transform: translate(100px, 0);
-  }
-  50% {
-      transform: translate(0, 100px);
-  }
-  75% {
-      transform: translate(-100px, 0);
-  }
-  100% {
-      transform: translate(0, -100px);
-  }
-}
-
-@keyframes circular2 {
-  0% {
-      transform: translate(0, 150px);
-  }
-  25% {
-      transform: translate(-150px, 0);
-  }
-  50% {
-      transform: translate(0, -150px);
-  }
-  75% {
-      transform: translate(150px, 0);
-  }
-  100% {
-      transform: translate(0, 150px);
-  }
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }

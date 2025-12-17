@@ -3,31 +3,60 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchSnippetById, deleteSnippet } from "@/store/snippetSlice";
-import { Edit, Trash2 } from "lucide-react";
-import CodeEditor from "@/components/CodeEditor";
-import ShareButton from "@/components/ShareButton";
-import Link from "next/link";
+import { fetchSnippetById, deleteSnippet, updateSnippet } from "@/store/snippetSlice";
 import { AppDispatch, RootState } from "@/store/store";
-import toast from "react-hot-toast";
 import { useAuth } from "@clerk/nextjs";
+import Link from "next/link";
+import toast from "react-hot-toast";
+import { Loader2 } from "lucide-react";
+
+import SnippetTopBar from "./_components/SnippetTopBar";
+import SnippetSidebar from "./_components/SnippetSidebar";
+import SnippetEditor from "./_components/SnippetEditor";
+import ConfirmationModal from "@/components/ConfirmationModal";
 
 export default function ViewSnippet() {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
   const snippet = useSelector(
     (state: RootState) => state.snippets.currentSnippet
   );
-  const { userId } = useAuth();
+  const { userId, isLoaded } = useAuth();
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
 
+  // Edit Mode State
+  const [isEditing, setIsEditing] = useState(false);
+  const [editForm, setEditForm] = useState({
+    title: "",
+    content: "",
+    language: "",
+    isPublic: false,
+  });
+  const [isSaving, setIsSaving] = useState(false);
+  const [hasCopied, setHasCopied] = useState(false);
+
+  // Delete Modal State
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  // Fetch Logic
   useEffect(() => {
-    dispatch(fetchSnippetById(id.toString()))
+    if (!id) return;
+    dispatch(fetchSnippetById(id))
       .unwrap()
-      .then(() => {
+      .then((data) => {
         setLoading(false);
+        // Initialize edit form
+        setEditForm({
+          title: data.title,
+          content: data.content,
+          language: data.language,
+          isPublic: data.isPublic,
+        });
       })
       .catch((err: Error) => {
         setError(err.message);
@@ -35,88 +64,202 @@ export default function ViewSnippet() {
       });
   }, [dispatch, id]);
 
-  const handleDelete = async () => {
-    if (confirm("Are you sure you want to delete this snippet?")) {
-      try {
-        await dispatch(deleteSnippet(id.toString())).unwrap();
-        toast.success("Snippet deleted successfully");
+  // Authorization Check
+  useEffect(() => {
+    if (!loading && snippet && isLoaded) {
+      const isOwner = snippet.userId === userId;
+      if (!snippet.isPublic && !isOwner) {
+        toast.error("You are not authorized to view this snippet");
         router.push("/");
+      } else {
+        setIsAuthorized(true);
+      }
+    }
+  }, [loading, snippet, isLoaded, userId, router]);
+
+  // Update edit form when snippet changes (e.g. after save)
+  useEffect(() => {
+    if (snippet) {
+      setEditForm({
+        title: snippet.title,
+        content: snippet.content,
+        language: snippet.language,
+        isPublic: snippet.isPublic,
+      });
+    }
+  }, [snippet]);
+
+  // Handlers
+  const handleCopy = () => {
+    if (snippet?.content) {
+      navigator.clipboard.writeText(snippet.content);
+      setHasCopied(true);
+      toast.success("Copied to clipboard");
+      setTimeout(() => setHasCopied(false), 2000);
+    }
+  };
+
+  const handleDeleteClick = () => {
+    setIsDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!id) return;
+    setIsDeleting(true);
+    try {
+      await dispatch(deleteSnippet(id)).unwrap();
+      toast.success("Snippet deleted successfully");
+      router.push("/");
+    } catch {
+      toast.error("Failed to delete snippet");
+      setIsDeleting(false);
+    }
+  };
+
+  const handleSave = async () => {
+    if (!snippet) return;
+    setIsSaving(true);
+    try {
+      await dispatch(
+        updateSnippet({
+          ...snippet,
+          title: editForm.title,
+          content: editForm.content,
+          language: editForm.language,
+          isPublic: editForm.isPublic,
+        })
+      ).unwrap();
+      setIsEditing(false);
+      toast.success("Snippet updated successfully");
+    } catch (err: any) {
+      toast.error(err.message || "Failed to update snippet");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleDownload = () => {
+    if (!snippet) return;
+    const element = document.createElement("a");
+    const file = new Blob([snippet.content], { type: "text/plain" });
+    element.href = URL.createObjectURL(file);
+    element.download = `${snippet.title.replace(/\s+/g, "_")}.${getLanguageExtension(snippet.language)}`;
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  };
+
+  const handleShare = async () => {
+    const url = window.location.href;
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: snippet?.title || "Check out this snippet",
+          text: `Check out this code snippet: ${snippet?.title}`,
+          url: url,
+        });
+      } catch (err) {
+        // User cancelled or share failed, fallback to copy
+        console.log("Share failed or cancelled:", err);
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(url);
+        toast.success("Snippet link copied to clipboard");
       } catch {
-        toast.error("Failed to delete snippet");
-        setError("Failed to delete snippet");
+        toast.error("Failed to copy link");
       }
     }
   };
 
-  if (loading) {
+  const getLanguageExtension = (lang: string) => {
+    const map: Record<string, string> = {
+      javascript: "js",
+      typescript: "ts",
+      python: "py",
+      html: "html",
+      css: "css",
+      json: "json",
+      // add more as needed
+    };
+    return map[lang.toLowerCase()] || "txt";
+  };
+
+  // Loading State
+  if (loading || !isLoaded || isAuthorized === null) {
     return (
-      <div className="w-[90%] lg:max-w-lg md:max-w-lg h-full flex justify-center items-center mx-auto font-bold mt-10">
-        <div className="container dark:bg-zinc-800 mx-auto px-4 py-8 rounded-md">
-          <div className="w-full mx-auto border border-gray-300 dark:border-zinc-600 rounded-md px-5 py-6">
-            {/* Skeleton for header */}
-            <div className="h-20 w-full bg-gray-300 dark:bg-neutral-700 animate-pulse-fast rounded-md my-4">
-            </div>
-            {/* Skeleton for additional content */}
-            <div className="h-5 w-full bg-neutral-300 dark:bg-neutral-600 animate-pulse-fast rounded-md"></div>
-            <div className="mt-4 animate-pulse bg-neutral-400 dark:bg-neutral-600 h-5 space-x-2 flex text-sm font-semibold rounded-md"></div>
-          </div>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[#0a0a0a]">
+        <Loader2 className="w-8 h-8 animate-spin text-indigo-500" />
+      </div>
+    );
+  }
+
+  // Error State
+  if (error || !snippet) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[#0a0a0a]">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-2">Snippet not found</h1>
+          <Link href="/" className="text-indigo-500 hover:underline">
+            Go back home
+          </Link>
         </div>
       </div>
     );
   }
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
 
-  if (!snippet) {
-    return (
-      <div className="m-4 text-center font-bold text-3xl">
-        Snippet not found!
-      </div>
-    );
-  }
   const isOwner = snippet.userId === userId;
 
-  if (!snippet.isPublic && !isOwner) {
-    toast.error("You are not authorized to view this snippet");
-    router.push("/");
-  }
-
   return (
-    <div className="container mx-auto px-2 lg:px-4 md:px-4 py-8">
-      <div className="lg:max-w-5xl w-full mx-auto border border-gray-300 dark:border-zinc-600 rounded-md px-3 lg:px-5 md:px-5 py-6">
-        <div className="my-2 mb-4">
-          <h1 className="text-3xl font-bold">{snippet.title}</h1>
-          <p className="mb-2 text-neutral-500 text-sm">
-            Language: {snippet.language}
-          </p>
-        </div>
-        <span className="mb-4 my-2 bg-zinc-900 text-gray-100 dark:text-gray-900 dark:bg-gray-100 py-1 text-xs font-semibold px-2 rounded-full">
-          {snippet.isPublic ? "Public" : "Private"}
-        </span>
-        <CodeEditor value={snippet.content} language={snippet.language} />
-        <div className="mt-4 space-x-2 flex text-sm font-semibold">
-          {snippet.isPublic && <ShareButton snippetId={snippet._id} />}
-          {isOwner && (
-            <Link
-              href={`/snippets/edit/${snippet._id}`}
-              className="border border-gray-300 dark:border-zinc-700 p-2 text-gray-900 dark:text-gray-100 hover:opacity-85 rounded-md inline-flex items-center"
-            >
-              <Edit className="size-4 mr-2" />
-              Edit
-            </Link>
-          )}
-          {isOwner && (
-            <button
-              onClick={handleDelete}
-              className="bg-red-500 hover:opacity-90 py-2 px-4 text-white rounded-md inline-flex items-center"
-            >
-              <Trash2 className="size-4 mr-2" />
-              Delete
-            </button>
-          )}
+    <div className="min-h-screen bg-gray-50 dark:bg-[#0a0a0a] font-sans">
+      <SnippetTopBar
+        snippet={snippet}
+        isEditing={isEditing}
+        setIsEditing={setIsEditing}
+        editForm={editForm}
+        setEditForm={setEditForm}
+        isOwner={isOwner}
+        isSaving={isSaving}
+        handleSave={handleSave}
+        handleCopy={handleCopy}
+        hasCopied={hasCopied}
+      />
+
+      {/* Main Content Layout */}
+      <div className="container mx-auto max-w-7xl px-4 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8">
+          <SnippetEditor
+            snippet={snippet}
+            isEditing={isEditing}
+            editForm={editForm}
+            setEditForm={setEditForm}
+            handleCopy={handleCopy}
+            hasCopied={hasCopied}
+          />
+
+          <SnippetSidebar
+            snippet={snippet}
+            isEditing={isEditing}
+            editForm={editForm}
+            setEditForm={setEditForm}
+            isOwner={isOwner}
+            handleCopy={handleCopy}
+            handleDownload={handleDownload}
+            handleDelete={handleDeleteClick}
+            handleShare={handleShare}
+          />
         </div>
       </div>
+
+      <ConfirmationModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        onConfirm={confirmDelete}
+        title="Delete Snippet"
+        message="Are you sure you want to delete this snippet? This action cannot be undone."
+        confirmText="Delete Snippet"
+        isLoading={isDeleting}
+      />
     </div>
   );
 }

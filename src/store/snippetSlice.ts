@@ -8,7 +8,9 @@ export const fetchSnippets = createAsyncThunk<Snippet[]>('snippets/fetchSnippets
 
 export const fetchSnippetById = createAsyncThunk<Snippet, string>('snippets/fetchSnippetById', async (id) => {
   const response = await fetch(`/api/snippets/${id}`);
-  return response.json();
+  const data = await response.json();
+  console.log("=== API Response for fetchSnippetById ===", data);
+  return data;
 });
 
 export const deleteSnippet = createAsyncThunk<string, string>('snippets/deleteSnippet', async (id: string) => {
@@ -30,8 +32,8 @@ export const createSnippet = createAsyncThunk<Snippet, NewSnippet>('snippets/cre
   return response.json()
 })
 
-export const updateSnippet = createAsyncThunk<Snippet, Snippet>('snippets/updateSnippet', async (snippet:Snippet) => {
-  const response = await fetch(`/api/snippets/${snippet._id }`, {
+export const updateSnippet = createAsyncThunk<Snippet, Snippet>('snippets/updateSnippet', async (snippet: Snippet) => {
+  const response = await fetch(`/api/snippets/${snippet._id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(snippet),
@@ -65,7 +67,7 @@ const snippetSlice = createSlice({
         state.snippets = action.payload;
         // console.log(state.snippets);
       })
-      .addCase(fetchSnippets.rejected, (state:SnippetState) => {
+      .addCase(fetchSnippets.rejected, (state: SnippetState) => {
         state.status = 'failed';
         // state.error = action.error.message || 'Unknown error';
       })
@@ -75,7 +77,7 @@ const snippetSlice = createSlice({
       .addCase(createSnippet.fulfilled, (state, action: PayloadAction<Snippet>) => {
         state.snippets.push(action.payload)
       })
-      .addCase(updateSnippet.fulfilled, (state:SnippetState, action:PayloadAction<Snippet>) => {
+      .addCase(updateSnippet.fulfilled, (state: SnippetState, action: PayloadAction<Snippet>) => {
         const index = state.snippets.findIndex((s) => s._id === action.payload._id)
         if (index !== -1) {
           state.snippets[index] = action.payload;

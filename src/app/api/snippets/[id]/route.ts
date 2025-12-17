@@ -3,10 +3,11 @@ import { auth } from '@clerk/nextjs/server'
 import { connectToDatabase } from '@/lib/mongodb'
 import Snippet from '@/models/Snippet'
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params;
     await connectToDatabase()
-    const snippet = await Snippet.findById(params.id)
+    const snippet = await Snippet.findById(id)
     if (!snippet) {
       return NextResponse.json({ error: 'Snippet not found' }, { status: 404 })
     }
@@ -16,9 +17,10 @@ export async function GET(request: Request, { params }: { params: { id: string }
   }
 }
 
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
+export async function PUT(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const { userId } = auth()
+    const { id } = await params;
+    const { userId } = await auth()
     if (!userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
@@ -26,7 +28,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
     await connectToDatabase()
     const data = await request.json()
     const snippet = await Snippet.findOneAndUpdate(
-      { _id: params.id, userId },
+      { _id: id, userId },
       { ...data, updatedAt: new Date() },
       { new: true }
     )
@@ -41,15 +43,16 @@ export async function PUT(request: Request, { params }: { params: { id: string }
   }
 }
 
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const { userId } = auth()
+    const { id } = await params;
+    const { userId } = await auth()
     if (!userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
     await connectToDatabase()
-    const snippet = await Snippet.findOneAndDelete({ _id: params.id, userId })
+    const snippet = await Snippet.findOneAndDelete({ _id: id, userId })
 
     if (!snippet) {
       return NextResponse.json({ error: 'Snippet not found or unauthorized' }, { status: 404 })

@@ -2,6 +2,9 @@
 
 Snippets is a code snippet management tool designed for developers to create, save, and share their snippets with ease. Built with modern technologies like **Next.js**, **Node.js**, **MongoDB**, and **TailwindCSS**, the app provides an efficient platform for managing and sharing code in multiple programming languages.
 
+## Preview
+![Snippets](/public/opengraph-image.png)
+
 ## Features
 
 - **Create, Edit, Delete Snippets**: Manage your code snippets with full CRUD functionality.

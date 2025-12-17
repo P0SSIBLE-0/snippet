@@ -5,6 +5,7 @@ export interface Snippet {
   content: string;
   language: string;
   isPublic: boolean;
+  tags?: string[];
   userId: string;
   createdAt: string;
   updatedAt: string;
