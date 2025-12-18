@@ -9,7 +9,6 @@ export const fetchSnippets = createAsyncThunk<Snippet[]>('snippets/fetchSnippets
 export const fetchSnippetById = createAsyncThunk<Snippet, string>('snippets/fetchSnippetById', async (id) => {
   const response = await fetch(`/api/snippets/${id}`);
   const data = await response.json();
-  console.log("=== API Response for fetchSnippetById ===", data);
   return data;
 });
 

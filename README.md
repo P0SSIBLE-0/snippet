@@ -54,3 +54,4 @@ Snippets is a code snippet management tool designed for developers to create, sa
 6. Open your browser and go to:
    ```
    http://localhost:3000
+   ```

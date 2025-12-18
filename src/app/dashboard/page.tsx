@@ -13,6 +13,7 @@ import { AnimatePresence, motion } from "motion/react";
 export default function Dashboard() {
     const dispatch = useDispatch<AppDispatch>();
     const { snippets, status } = useSelector((state: RootState) => state.snippets);
+
     const [view, setView] = useState<"grid" | "list">("grid");
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -29,8 +30,8 @@ export default function Dashboard() {
 
     if (status === "loading") {
         return (
-            <div className="container mx-auto px-4 py-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="container max-w-7xl mx-auto px-4 py-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-20">
                     {[...Array(6)].map((_, i) => (
                         <Loader key={i} />
                     ))}
@@ -74,7 +75,7 @@ export default function Dashboard() {
                         </button>
                         <button
                             onClick={() => setView("list")}
-                            className={`p-2 rounded-md transition-all ${view === "list" ? "bg-white dark:bg-zinc-800 shadow-xs text-indigo-500" : "text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"}`}
+                            className={`p-2 rounded-md transition-all ${view === "list" ? "bg-white dark:bg-zinc-800 shadow-xs text-blue-500" : "text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"}`}
                         >
                             <ListIcon size={18} />
                         </button>
@@ -82,7 +83,7 @@ export default function Dashboard() {
 
                     <Link
                         href="/snippets/create"
-                        className="ml-auto md:ml-0 inline-flex items-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-lg shadow-indigo-500/20 transition-all hover:scale-[1.02]"
+                        className="ml-auto md:ml-0 inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-lg shadow-indigo-500/20 transition-all hover:scale-[1.02]"
                     >
                         <Plus size={18} />
                         <span className="hidden sm:inline">New Snippet</span>

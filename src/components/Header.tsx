@@ -1,38 +1,28 @@
 "use client";
 import Link from "next/link";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { Moon, Plus, Sun } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 
 export default function Header() {
-  const [theme, setTheme] = useState<string>("light");
+  const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-
-  function toggleDarkMode() {
-    const currentTheme = localStorage.getItem("theme");
-    // Determine if dark mode should be enabled
-    const isDarkMode =
-      currentTheme === "dark" ||
-      (!currentTheme &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches);
-
-    if (isDarkMode) {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light"); // Save the new theme
-      setTheme("light");
-    } else {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark"); // Save the new theme
-      setTheme("dark");
-    }
-  }
 
   useEffect(() => {
     setMounted(true);
-    toggleDarkMode();
   }, []);
 
-  if (!mounted) return null; // Prevents hydration error
+  if (!mounted) return (
+    <header className="bg-white dark:bg-zinc-950/35 sticky top-0 z-50 backdrop-blur">
+      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+        <div className="text-xl lg:md:text-3xl font-extrabold bg-linear-to-r from-zinc-900 to-zinc-500 bg-clip-text text-transparent">
+          Snippets
+        </div>
+        <div className="w-10 h-10 rounded-full bg-gray-200 animate-pulse" />
+      </div>
+    </header>
+  );
 
   return (
     <header className="bg-white dark:bg-zinc-950/35 sticky top-0 z-50  dark:border-zinc-700 backdrop-blur dark:border-none">
@@ -47,10 +37,14 @@ export default function Header() {
           <ul className="flex gap-4 items-center">
             <li>
               <button
-                onClick={toggleDarkMode}
+                onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
                 className="lg:p-2 md:p-2 p-2 rounded-full bg-gray-200 dark:bg-zinc-700 dark:text-white text-zinc-900 transition-all duration-200"
               >
-                {theme === "dark" ? <Sun className="dark:scale-100 scale-0 duration-200 rotate-180 dark:rotate-0 " size={20} /> : <Moon className="dark:scale-0 scale-100 duration-200 rotate-30 dark:rotate-0" size={20} />}
+                {resolvedTheme === "dark" ? (
+                  <Sun className="duration-200" size={20} />
+                ) : (
+                  <Moon className="duration-200" size={20} />
+                )}
               </button>
             </li>
             <SignedIn>

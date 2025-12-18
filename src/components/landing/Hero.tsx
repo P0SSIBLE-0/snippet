@@ -22,7 +22,7 @@ export default function Hero() {
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5 }}
+                            transition={{ duration: 0.3 }}
                         >
                             <div className="inline-flex items-center gap-2 px-1.5 py-1 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-sm font-medium mb-6">
                                 <Code2 size={16} />

@@ -8,7 +8,6 @@ import { Editor } from "@monaco-editor/react";
 import toast from "react-hot-toast";
 import { motion } from "motion/react";
 import {
-  Code,
   Globe,
   Lock,
   Save,
@@ -28,7 +27,7 @@ export default function CreateSnippet() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const languages = [
-    'javascript', 'python', 'java', 'cpp', 'ruby',
+    'javascript', 'html', 'python', 'java', 'cpp', 'ruby',
     'go', 'rust', 'typescript', 'php', 'csharp'
   ];
 
@@ -57,7 +56,7 @@ export default function CreateSnippet() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
+        transition={{ duration: 0.3 }}
         className="w-full max-w-6xl flex flex-col gap-6"
       >
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">

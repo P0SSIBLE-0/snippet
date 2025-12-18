@@ -7,7 +7,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
             <div className="relative hidden w-0 flex-1 lg:block">
                 <img
                     className="absolute inset-0 h-full w-full object-cover"
-                    src="https://images.unsplash.com/photo-1722279958384-2d999b1e42f9?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YmFja2dyb3VuZCUyMGRlc2lnbnxlbnwwfHwwfHx8MA%3D%3D"
+                    src="https://images.unsplash.com/photo-1605106702842-01a887a31122?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDh8fHBhdHRlcm58ZW58MHx8MHx8fDA%3D"
                     alt="Authentication background"
                 />
                 <div className="absolute inset-0 bg-zinc-900/20 backdrop-blur-[1px]" />

@@ -69,9 +69,9 @@ export default function FeatureGrid() {
 function FeatureCard({ feature, index }: { feature: any, index: number }) {
     return (
         <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, staggerChildren: 0.1 }}
+            initial={{ opacity: 0, y: 30, scale: 0.55 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.3, staggerChildren: 0.1, ease: "easeOut" }}
             viewport={{ once: true }}
             className="relative group overflow-hidden dark:bg-zinc-900 bg-white border dark:border-zinc-800 border-gray-200 p-8 flex flex-col justify-between hover:shadow-xl transition-all duration-300 min-h-[250px]"
         >

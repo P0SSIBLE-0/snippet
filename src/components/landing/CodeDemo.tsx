@@ -72,7 +72,7 @@ export default function CodeDemo() {
         <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
             className="relative bg-zinc-900 border border-gray-800 shadow-lg overflow-hidden font-geist-mono text-sm w-[360px] md:lg:w-[500px] mx-auto "
         >
             {/* Window Header */}
@@ -130,6 +130,7 @@ export default function CodeDemo() {
                         language={activeTab}
                         showLineNumbers={true}
                         className="bg-transparent p-0"
+
                     />
 
                     <button
