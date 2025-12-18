@@ -44,8 +44,8 @@ const features = [
 
 export default function FeatureGrid() {
     return (
-        <section className="py-24 dark:bg-zinc-950 bg-gray-50">
-            <div className="container mx-auto px-4">
+        <section className="py-20 dark:bg-zinc-950 bg-gray-50">
+            <div className="container mx-auto px-4 xl:px-14 max-w-7xl">
 
                 <div className="text-center max-w-2xl mx-auto mb-16">
                     <h2 className="text-3xl font-bold dark:text-white text-gray-900 mb-4">
@@ -69,7 +69,7 @@ export default function FeatureGrid() {
 function FeatureCard({ feature, index }: { feature: any, index: number }) {
     return (
         <motion.div
-            initial={{ opacity: 0, y: 30, scale: 0.55 }}
+            initial={{ opacity: 0, y: 30, scale: 0.75 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.3, staggerChildren: 0.1, ease: "easeOut" }}
             viewport={{ once: true }}

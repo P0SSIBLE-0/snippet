@@ -7,7 +7,7 @@ import CodeDemo from "./CodeDemo";
 
 export default function Hero() {
     return (
-        <section className="relative pt-20 pb-32 lg:px-40 md:px-2 overflow-hidden dark:bg-zinc-950 bg-white">
+        <section className="relative pt-20 pb-32 xl:px-40 lg:px-4 overflow-hidden dark:bg-zinc-950 bg-white">
             {/* Background gradients */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none">
                 <div className="absolute top-20 left-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
@@ -29,7 +29,7 @@ export default function Hero() {
                                 <span>Developer-First Snippet Manager</span>
                             </div>
 
-                            <h1 className="text-4xl lg:text-6xl font-bold tracking-tight text-gray-900 dark:text-white mb-6 leading-[1.1]">
+                            <h1 className="text-4xl lg:text-5xl font-bold tracking-tight text-gray-900 dark:text-white mb-6 leading-[1.1]">
                                 Save, Organize, and Share Code Snippets. <br className="hidden lg:block" />
                                 <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
                                     Instantly.
@@ -43,14 +43,14 @@ export default function Hero() {
 
                             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
                                 <Link href="/signup" className="w-full sm:w-auto">
-                                    <button className="w-full sm:w-auto px-8 py-4 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-lg font-bold hover:bg-gray-800 dark:hover:bg-gray-100 transition-all flex items-center justify-center gap-2 group shadow-lg shadow-gray-900/20 dark:shadow-white/10">
+                                    <button className="w-full sm:w-auto px-7 py-3.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-lg font-bold hover:bg-gray-800 dark:hover:bg-gray-100 transition-all flex items-center justify-center gap-2 group shadow-lg shadow-gray-900/20 dark:shadow-white/10 cursor-pointer">
                                         Get Started Free
                                         <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                                     </button>
                                 </Link>
 
                                 <Link href="/snippets/public" className="w-full sm:w-auto">
-                                    <button className="w-full sm:w-auto px-8 py-4 bg-gray-100 dark:bg-white/5 text-gray-900 dark:text-white rounded-lg font-semibold hover:bg-gray-200 dark:hover:bg-white/10 transition-all border border-transparent dark:border-white/10">
+                                    <button className="w-full sm:w-auto px-7 py-3.5 bg-gray-100 dark:bg-white/5 text-gray-900 dark:text-white rounded-lg font-semibold hover:bg-gray-200 dark:hover:bg-white/10 transition-all border border-transparent dark:border-white/10 cursor-pointer">
                                         View Demo
                                     </button>
                                 </Link>

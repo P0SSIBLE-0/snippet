@@ -25,7 +25,7 @@ export default function Header() {
   );
 
   return (
-    <header className="bg-white dark:bg-zinc-950/35 sticky top-0 z-50  dark:border-zinc-700 backdrop-blur dark:border-none">
+    <header className="bg-white dark:bg-zinc-950/35 sticky top-0 z-50  dark:border-zinc-700 backdrop-blur dark:border-none xl:px-40">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <Link
           href="/"
